@@ -1,3 +1,4 @@
+import 'package:c_clinic/today_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,9 +6,40 @@ import 'login_page.dart';
 import 'main.dart';
 import 'setting_page.dart';
 
-/// 홈페이지
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  TextEditingController jobController = TextEditingController();
+
+  bool isOn = false;
+  String _str = '';
+
+  void _onPressed(BuildContext context) {
+    if (isOn == true) {
+      _str = '카메라가 켜졌어요!';
+    } else if (isOn == false) {
+      _str = '카메라가 꺼졌어요!';
+    }
+
+    var snackBar = SnackBar(
+      content: Text(
+        '$_str',
+        textAlign: TextAlign.center,
+      ),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      width: 150,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +60,8 @@ class HomePage extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              print("sign out");
-              // 로그인 페이지로 이동
+              //print("sign out");
+              // 환경설정페이지로 이동
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SettingPage()),
@@ -41,20 +73,23 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Container(
-              width: 120,
-              height: 120,
-              margin: EdgeInsets.only(top: 80),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/rogo.png'),
-                ),
-              ),
+            SizedBox(
+              height: 80,
             ),
+            IconButton(
+                //today
+                iconSize: 120.0,
+                onPressed: () {
+                  isOn = !isOn; //toggle
+                  _onPressed(context);
+                },
+                icon: Image.asset(
+                  'assets/images/rogo.png',
+                )),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Text(
-                "       '고부기와 함께\n바른 자세를 만들어봐요.'",
+                '고부기를 눌러 카메라 on/off',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -79,7 +114,13 @@ class HomePage extends StatelessWidget {
                     IconButton(
                         //today
                         iconSize: 100.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TodayPage()),
+                          );
+                        },
                         icon: Image.asset(
                           'assets/images/today.png',
                         )),
