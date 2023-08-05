@@ -17,7 +17,7 @@ class _TodayPageState extends State<TodayPage> {
 
   @override
   Widget build(BuildContext context) {
-    int _count = 20;
+    int _count = 20; //경고횟수 일단 지정해놓음(이제 파이어베이스에서 가져와야함)
     // const color_red = Colors.red;
 
     // MaterialColor _check_Color(_count) {
@@ -33,6 +33,7 @@ class _TodayPageState extends State<TodayPage> {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
+          /* App Bar*/
           appBar: AppBar(
             title: Text(
               "c-clinic",
@@ -56,10 +57,12 @@ class _TodayPageState extends State<TodayPage> {
               ],
             ),
           ),
+          /* body */
           body: TabBarView(children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
               children: [
+                /* 오늘의 경고 text */
                 Padding(
                   padding: EdgeInsets.fromLTRB(35, 60, 0, 0),
                   child: Text(
@@ -71,11 +74,12 @@ class _TodayPageState extends State<TodayPage> {
                     ),
                   ),
                 ),
+                /* 오늘의 경고 count 보여주는 창 */
                 Center(
                   child: SizedBox(
                       child: Column(
                     children: [
-                      if (_count < 10)
+                      if (_count < 10) //count가 10보다 작으면, 원 색깔 = 초록
                         Center(
                           child: Container(
                               margin: EdgeInsets.only(top: 50),
@@ -104,7 +108,8 @@ class _TodayPageState extends State<TodayPage> {
                                 ),
                               )),
                         )
-                      else if (_count >= 10 && _count < 20)
+                      else if (_count >= 10 &&
+                          _count < 20) // 10 < count < 20 이면, 원 색깔 = 주황
                         Center(
                           child: Container(
                               margin: EdgeInsets.only(top: 50),
@@ -133,7 +138,7 @@ class _TodayPageState extends State<TodayPage> {
                                 ),
                               )),
                         )
-                      else
+                      else //count가 20보다 크면, 원 색깔 = 빨강
                         Center(
                           child: Container(
                               margin: EdgeInsets.only(top: 50),
@@ -167,8 +172,10 @@ class _TodayPageState extends State<TodayPage> {
                 ),
               ],
             ),
+            /* 오늘의 경고의 기록 보여주는 창 */
             CustomScrollView(
               slivers: <Widget>[
+                // 오늘의 경고 text
                 const SliverAppBar(
                   backgroundColor: Colors.white,
                   pinned: false,
@@ -184,22 +191,22 @@ class _TodayPageState extends State<TodayPage> {
                     ),
                   ),
                 ),
+                // 오늘의 경고 list report
                 SliverFixedExtentList(
-                  itemExtent: 80.0,
+                  itemExtent: 80.0, //리스트 한 칸 넓이
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                     return Container(
                       alignment: Alignment.center,
-                      //color: Colors.purple[100 * (index % 10)],
                       child: Text(
-                        '$index 회 | 00:00:00',
+                        '$index 회 | 00:00',
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
-                            color: Color.fromARGB(255, 113, 113, 113)),
+                            color: const Color.fromARGB(255, 155, 155, 155)),
                       ),
                     );
-                  }, childCount: 30),
+                  }, childCount: 288), //화면에 나오는 list index 개수 (임시)
                 ),
               ],
             ),
