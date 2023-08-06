@@ -1,3 +1,4 @@
+//import 'package:c_clinic_final/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,6 @@ class _LoginPageState extends State<LoginPage> {
                   labelText: "비밀번호",
                   hintText: "비밀번호를 입력하세요."),
             ),
-            //SizedBox(height: 32),
 
             /// 로그인 버튼
             Padding(
@@ -86,11 +86,29 @@ class _LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                   child: Text("로그인", style: TextStyle(fontSize: 15)),
                   onPressed: () {
-                    // 로그인 성공시 HomePage로 이동
+                    // 로그인
+                    // AuthService().signIn(
+                    //   email: emailController.text,
+                    //   password: passwordController.text,
+                    //   onSuccess: () {
+                    //     // 로그인 성공
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //       content: Text("로그인 성공"),
+                    //     ));
+
+                    // HomePage로 이동
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => HomePage()),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                     );
+                    //   },
+                    //   onError: (err) {
+                    //     // 에러 발생
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //       content: Text(err),
+                    //     ));
+                    //   },
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -111,7 +129,23 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: () {
                   // 회원가입
-                  print("sign up");
+
+                  // AuthService().signUp(
+                  //   email: emailController.text,
+                  //   password: passwordController.text,
+                  //   onSuccess: () {
+                  //     // 회원가입 성공
+                  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //       content: Text("회원가입 성공"),
+                  //     ));
+                  //   },
+                  //   onError: (err) {
+                  //     // 에러 발생
+                  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //       content: Text(err),
+                  //     ));
+                  //   },
+                  // );
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
