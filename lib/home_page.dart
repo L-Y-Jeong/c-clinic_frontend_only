@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'main.dart';
 import 'setting_page.dart';
+import 'week_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -80,8 +81,10 @@ class _HomePageState extends State<HomePage> {
                 //today
                 iconSize: 120.0,
                 onPressed: () {
-                  isOn = !isOn; //toggle
-                  _onPressed(context);
+                  initState();
+
+                  // isOn = !isOn; //toggle
+                  // _onPressed(context);
                 },
                 icon: Image.asset(
                   'assets/images/rogo.png',
@@ -127,7 +130,12 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                         //week
                         iconSize: 100.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WeekPage()),
+                          );
+                        },
                         icon: Image.asset(
                           'assets/images/week.png',
                         )),
@@ -142,6 +150,56 @@ class _HomePageState extends State<HomePage> {
                 )
               ]),
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Loading extends StatefulWidget {
+  const Loading({super.key});
+
+  @override
+  State<Loading> createState() => _LoadingState();
+}
+
+class _LoadingState extends State<Loading> with TickerProviderStateMixin {
+  late AnimationController controller;
+  //const Loading({super.key});
+
+  @override
+  void initState() {
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    );
+    controller.repeat(reverse: true);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text(
+              '10초만 가만히 있어보쇼',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            CircularProgressIndicator(
+              value: controller.value,
+              //semanticsLabel: 'Circular progress indicator',
+            ),
           ],
         ),
       ),

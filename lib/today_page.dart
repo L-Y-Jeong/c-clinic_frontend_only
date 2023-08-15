@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,17 +19,16 @@ class _TodayPageState extends State<TodayPage> {
 
   @override
   Widget build(BuildContext context) {
-    int _count = 20; //경고횟수 일단 지정해놓음(이제 파이어베이스에서 가져와야함)
-    // const color_red = Colors.red;
+    int _count = 3; //경고횟수 일단 지정해놓음(이제 파이어베이스에서 가져와야함)
+    var hours = List.empty(growable: true); //시 빈 리스트 생성
+    var minutes = List.empty(growable: true); //분 빈 리스트 생성
 
-    // MaterialColor _check_Color(_count) {
-    //   //var color_list = List<int>.filled(2, 0);
-
-    //   if (_count >= 10 && _count < 20) {
-    //     Color color_red = Colors.red;
-    //     return color_red;
-    //   }
-    // }
+    hours.add('05');
+    hours.add('08');
+    hours.add('16');
+    minutes.add('45');
+    minutes.add('17');
+    minutes.add('25');
 
     return MaterialApp(
       home: DefaultTabController(
@@ -192,21 +193,31 @@ class _TodayPageState extends State<TodayPage> {
                   ),
                 ),
                 // 오늘의 경고 list report
+                // if (_count == 0)
+                //   (Container(height: 80, child: Text('오늘의 경고 없음')))
+                // else if (_count > 0)
+
                 SliverFixedExtentList(
                   itemExtent: 80.0, //리스트 한 칸 넓이
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
+                    var h = hours[index];
+                    var m = minutes[index];
+                    index += 1;
                     return Container(
                       alignment: Alignment.center,
+                      color: Colors.lightGreen[100 * ((index - 1) % 10)],
                       child: Text(
-                        '$index 회 | 00:00',
+                        '$index 회 | $h : $m', //hours, minutes 출력
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.normal,
-                            color: const Color.fromARGB(255, 155, 155, 155)),
+                            color: const Color.fromARGB(255, 59, 59, 59)
+                            // color: const Color.fromARGB(255, 155, 155, 155)
+                            ),
                       ),
                     );
-                  }, childCount: 288), //화면에 나오는 list index 개수 (임시)
+                  }, childCount: _count), //화면에 나오는 list index 개수
                 ),
               ],
             ),
