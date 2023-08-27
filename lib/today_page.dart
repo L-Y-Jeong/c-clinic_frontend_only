@@ -19,16 +19,31 @@ class _TodayPageState extends State<TodayPage> {
 
   @override
   Widget build(BuildContext context) {
-    int _count = 3; //경고횟수 일단 지정해놓음(이제 파이어베이스에서 가져와야함)
+    int _count = 10; //경고횟수 일단 지정해놓음(이제 파이어베이스에서 가져와야함)
     var hours = List.empty(growable: true); //시 빈 리스트 생성
     var minutes = List.empty(growable: true); //분 빈 리스트 생성
 
-    hours.add('05');
-    hours.add('08');
-    hours.add('16');
-    minutes.add('45');
-    minutes.add('17');
-    minutes.add('25');
+    hours.add(9);
+    hours.add(9);
+    hours.add(10);
+    hours.add(11);
+    hours.add(12);
+    hours.add(12);
+    hours.add(12);
+    hours.add(15);
+    hours.add(16);
+    hours.add(18);
+
+    minutes.add(12);
+    minutes.add(35);
+    minutes.add(50);
+    minutes.add(5);
+    minutes.add(25);
+    minutes.add(43);
+    minutes.add(52);
+    minutes.add(53);
+    minutes.add(12);
+    minutes.add(27);
 
     return MaterialApp(
       home: DefaultTabController(
@@ -201,14 +216,16 @@ class _TodayPageState extends State<TodayPage> {
                   itemExtent: 80.0, //리스트 한 칸 넓이
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                    var h = hours[index];
-                    var m = minutes[index];
+                    // var h = hours[index].toString();
+                    // var h_S = h.padLeft(2, "0");
+                    // var m = minutes[index].toString();
+                    // var m_S = m.padLeft(2, "0");
                     index += 1;
                     return Container(
                       alignment: Alignment.center,
                       color: Colors.lightGreen[100 * ((index - 1) % 10)],
                       child: Text(
-                        '$index 회 | $h : $m', //hours, minutes 출력
+                        '$index 회 | ${hours[index - 1]} : ${minutes[index - 1]}', //hours, minutes 출력
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.normal,

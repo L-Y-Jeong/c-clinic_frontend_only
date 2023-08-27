@@ -83,8 +83,8 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   initState();
 
-                  // isOn = !isOn; //toggle
-                  // _onPressed(context);
+                  isOn = !isOn; //toggle
+                  _onPressed(context);
                 },
                 icon: Image.asset(
                   'assets/images/rogo.png',
@@ -157,52 +157,52 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class Loading extends StatefulWidget {
-  const Loading({super.key});
+// class Loading extends StatefulWidget {
+//   const Loading({super.key});
 
-  @override
-  State<Loading> createState() => _LoadingState();
-}
+//   @override
+//   State<Loading> createState() => _LoadingState();
+// }
 
-class _LoadingState extends State<Loading> with TickerProviderStateMixin {
-  late AnimationController controller;
-  //const Loading({super.key});
+// class _LoadingState extends State<Loading> with TickerProviderStateMixin {
+//   late AnimationController controller;
+//   //const Loading({super.key});
 
-  @override
-  void initState() {
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 10),
-    );
-    controller.repeat(reverse: true);
-    super.initState();
-  }
+//   @override
+//   void initState() {
+//     controller = AnimationController(
+//       vsync: this,
+//       duration: const Duration(seconds: 10),
+//     );
+//     controller.repeat(reverse: true);
+//     super.initState();
+//   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     controller.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              '10초만 가만히 있어보쇼',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            CircularProgressIndicator(
-              value: controller.value,
-              //semanticsLabel: 'Circular progress indicator',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Padding(
+//         padding: const EdgeInsets.all(20.0),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: <Widget>[
+//             Text(
+//               '10초만 가만히 있어보쇼',
+//               style: Theme.of(context).textTheme.titleLarge,
+//             ),
+//             CircularProgressIndicator(
+//               value: controller.value,
+//               //semanticsLabel: 'Circular progress indicator',
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

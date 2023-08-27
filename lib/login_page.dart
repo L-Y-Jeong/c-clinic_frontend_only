@@ -101,15 +101,15 @@ class _LoginPageState extends State<LoginPage> {
                       context,
                       MaterialPageRoute(builder: (context) => HomePage()),
                     );
-                    //   },
-                    //   onError: (err) {
-                    //     // 에러 발생
-                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    //       content: Text(err),
-                    //     ));
-                    //   },
-                    // );
                   },
+                  // onError: (err) {
+                  //   // 에러 발생
+                  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  //     content: Text(err),
+                  //   ));
+                  // },
+                  //);
+                  //},
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

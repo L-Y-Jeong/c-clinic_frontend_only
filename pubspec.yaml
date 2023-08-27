@@ -71,6 +71,8 @@ flutter:
       - assets/images/angle.png
       - assets/images/push.png
       - assets/images/camera.png
+      - assets/images/add.png
+      - assets/images/remove.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
