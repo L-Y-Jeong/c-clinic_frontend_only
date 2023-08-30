@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,17 @@ class _WeekPageState extends State<WeekPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<double> w_cnt = [20, 17, 28, 30, 45, 68, 10]; //일별 카운트 리스트
+    List<String> w_day = [
+      '7/05',
+      '7/11',
+      '7/12',
+      '7/13',
+      '7/14',
+      '7/15',
+      '7/16'
+    ]; //날짜 카운트 리스트
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -58,24 +70,8 @@ class _WeekPageState extends State<WeekPage> {
                 child: CustomPaint(
                   size: Size(400, 100),
                   foregroundPainter: BarChart(
-                    data: <double>[
-                      10,
-                      11,
-                      30,
-                      20,
-                      17,
-                      33,
-                      13,
-                    ],
-                    labels: <String>[
-                      '7/10',
-                      '7/11',
-                      '7/12',
-                      '7/13',
-                      '7/14',
-                      '7/15',
-                      '7/16',
-                    ],
+                    data: w_cnt, //count
+                    labels: w_day, //날짜
                     color: Color.fromARGB(255, 155, 155, 155),
                   ),
                 ),
@@ -217,7 +213,7 @@ class _WeekPageState extends State<WeekPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
-                              color: Color.fromARGB(255, 141, 239, 127)),
+                              color: Color.fromARGB(255, 102, 211, 88)),
                         ),
                         Text(
                           ' 경고 횟수',
@@ -319,13 +315,14 @@ class BarChart extends CustomPainter {
   // x축 텍스트(레이블)를 그린다.
   void drawXLabels(Canvas canvas, Size size, List<Offset> coordinates) {
     // 화면 크기에 따라 유동적으로 폰트 크기를 계산한다.
-    double fontSize = calculateFontSize(labels[0], size, xAxis: true);
+    // double fontSize = calculateFontSize(labels[0], size, xAxis: true);
 
     for (int index = 0; index < labels.length; index++) {
+      //주간그래프 날짜 적는 곳
       TextSpan span = TextSpan(
         style: TextStyle(
           color: const Color.fromARGB(255, 45, 45, 45),
-          fontSize: fontSize,
+          fontSize: 15,
           fontFamily: 'Roboto',
           fontWeight: FontWeight.w100,
         ),
