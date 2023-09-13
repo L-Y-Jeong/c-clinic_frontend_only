@@ -150,8 +150,9 @@ class _SettingPageState extends State<SettingPage> {
                                   child: FittedBox(
                                     child: FloatingActionButton(
                                       onPressed: () {
+                                        _cntTop = _cntTop + 15;
                                         setState(() {
-                                          _cntTop++;
+                                          // _cntTop = _cntTop + 15;
                                         });
                                       }, //버튼 누르면 cnt++
                                       backgroundColor:

@@ -77,9 +77,11 @@ class _WeekPageState extends State<WeekPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(50, 30, 50, 20),
-              child: Container(height: 1.0, width: 400, color: Colors.grey),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(50, 30, 50, 20),
+                child: Container(height: 1.0, width: 400, color: Colors.grey),
+              ),
             ),
             /* 평균 경고횟수 */
             Center(

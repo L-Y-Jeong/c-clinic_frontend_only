@@ -1,11 +1,15 @@
+import 'dart:js_interop';
+
 import 'package:c_clinic/today_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'login_page.dart';
 import 'main.dart';
 import 'setting_page.dart';
 import 'week_page.dart';
+import 'chatbot_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,29 +22,60 @@ class _HomePageState extends State<HomePage> {
   TextEditingController jobController = TextEditingController();
 
   bool isOn = false;
-  String _str = '';
+  bool isLoading = false;
+  String _str = '고부기를 눌러 카메라 on';
 
   void _onPressed(BuildContext context) {
-    if (isOn == true) {
-      _str = '카메라가 켜졌어요!';
-    } else if (isOn == false) {
-      _str = '카메라가 꺼졌어요!';
+    if (isLoading) {
+      return; // 이미 로딩 중이면 아무것도 하지 않음
     }
 
-    var snackBar = SnackBar(
-      content: Text(
-        '$_str',
-        textAlign: TextAlign.center,
-      ),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      width: 150,
-    );
+    setState(() {
+      //isOn = !isOn; // toggle isOn 상태
+      if (isOn == true) {
+        isLoading = true;
+        _str = "고부기를 눌러 카메라 off";
+      } // 로딩 상태 시작
+      else if (isOn == false) {
+        _str = "고부기를 눌러 카메라 on";
+      }
+    });
 
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // 10초 동안 로딩을 표시한 후에 로딩을 종료
+    Future.delayed(Duration(seconds: 10), () {
+      setState(() {
+        isLoading = false; // 로딩 상태 종료
+      });
+    });
+
+    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    // 나머지 처리 코드는 여기에 넣으세요
   }
+
+  //String _str = '';
+
+  // void _onPressed(BuildContext context) {
+  //   if (isOn == true) {
+  //     _str = '카메라가 켜졌어요!';
+  //   } else if (isOn == false) {
+  //     _str = '카메라가 꺼졌어요!';
+  //   }
+
+  //   var snackBar = SnackBar(
+  //     content: Text(
+  //       '$_str',
+  //       textAlign: TextAlign.center,
+  //     ),
+  //     behavior: SnackBarBehavior.floating,
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(20),
+  //     ),
+  //     width: 150,
+  //   );
+
+  //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +116,6 @@ class _HomePageState extends State<HomePage> {
                 //today
                 iconSize: 120.0,
                 onPressed: () {
-                  initState();
-
                   isOn = !isOn; //toggle
                   _onPressed(context);
                 },
@@ -92,7 +125,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Text(
-                '고부기를 눌러 카메라 on/off',
+                '$_str',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -142,7 +175,13 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                         //chatbot
                         iconSize: 100.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChatbotPage()),
+                          );
+                        },
                         icon: Image.asset(
                           'assets/images/chatbot.png',
                         )),
@@ -153,56 +192,34 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      // 모달 다이얼로그
+      floatingActionButton: isLoading
+          ? Stack(
+              children: [
+                ModalBarrier(
+                  color: Colors.black.withOpacity(0.4),
+                  dismissible: false,
+                ),
+                Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        '카메라를 보며 정자세를 유지해 주세요.',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+              ],
+            )
+          : null,
     );
   }
 }
-
-// class Loading extends StatefulWidget {
-//   const Loading({super.key});
-
-//   @override
-//   State<Loading> createState() => _LoadingState();
-// }
-
-// class _LoadingState extends State<Loading> with TickerProviderStateMixin {
-//   late AnimationController controller;
-//   //const Loading({super.key});
-
-//   @override
-//   void initState() {
-//     controller = AnimationController(
-//       vsync: this,
-//       duration: const Duration(seconds: 10),
-//     );
-//     controller.repeat(reverse: true);
-//     super.initState();
-//   }
-
-//   @override
-//   void dispose() {
-//     controller.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Padding(
-//         padding: const EdgeInsets.all(20.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: <Widget>[
-//             Text(
-//               '10초만 가만히 있어보쇼',
-//               style: Theme.of(context).textTheme.titleLarge,
-//             ),
-//             CircularProgressIndicator(
-//               value: controller.value,
-//               //semanticsLabel: 'Circular progress indicator',
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
